@@ -4,7 +4,7 @@ FROM bubbam2006/nvmyarn:20.12.2
 WORKDIR /usr/src
 
 # Install Playwright
-USER nvm  #should already be this user from the parent image
+USER nvm
 RUN bash -c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && npx playwright install"
 RUN bash -c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && npx playwright install-deps"
 
