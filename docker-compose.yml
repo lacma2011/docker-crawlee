@@ -1,13 +1,7 @@
 version: '3.8'
 
-# this is equivalent to:
-# docker run --add-host sessionsafe.org:127.0.0.1 --add-host api.dev.sessionsafe.org:127.0.0.1 --add-host dev.sessionsafe.org:127.0.0.1 --add-host hasura.dev.sessionsafe.org:127.0.0.1 --rm -it -v ${PWD}:/usr/src -p 3001:3001 bubbam2006/nvmyarn:20.12.2 -c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && yarn clean-start"
-
-# when running production environment (need to build):
-#docker run --add-host sessionsafe.org:127.0.0.1 --add-host api.dev.sessionsafe.org:127.0.0.1 --add-host dev.sessionsafe.org:127.0.0.1 --add-host hasura.dev.sessionsafe.org:127.0.0.1 --rm -it -v ${PWD}:/usr/src -p 3001:3001 bubbam2006/nvmyarn:20.12.2 -c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && yarn next:build"
-# docker run --add-host sessionsafe.org:127.0.0.1 --add-host api.dev.sessionsafe.org:127.0.0.1 --add-host dev.sessionsafe.org:127.0.0.1 --add-host hasura.dev.sessionsafe.org:127.0.0.1 --rm -it -v ${PWD}:/usr/src -p 3001:3001 bubbam2006/nvmyarn:20.12.2 -c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && yarn start"
-
 # docker run --rm -it -v ${PWD}:/usr/src -p 3001:3001 bubbam2006/nvmyarn:20.12.2 -c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && yarn clean-start"
+# docker exec -it $(docker ps -q -f "name=crawlee") bash -c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && node index.js"
 
 services:
   app:
@@ -15,6 +9,7 @@ services:
       context: .
       dockerfile: Dockerfile
     command: '-c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && bash"'
+    #command: '-c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && node index.js'
     volumes:
       - .:/usr/src
     ports:
