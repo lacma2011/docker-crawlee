@@ -1,0 +1,67 @@
+version: '3.8'
+
+# this is equivalent to:
+# docker run --add-host sessionsafe.org:127.0.0.1 --add-host api.dev.sessionsafe.org:127.0.0.1 --add-host dev.sessionsafe.org:127.0.0.1 --add-host hasura.dev.sessionsafe.org:127.0.0.1 --rm -it -v ${PWD}:/usr/src -p 3001:3001 bubbam2006/nvmyarn:20.12.2 -c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && yarn clean-start"
+
+# when running production environment (need to build):
+#docker run --add-host sessionsafe.org:127.0.0.1 --add-host api.dev.sessionsafe.org:127.0.0.1 --add-host dev.sessionsafe.org:127.0.0.1 --add-host hasura.dev.sessionsafe.org:127.0.0.1 --rm -it -v ${PWD}:/usr/src -p 3001:3001 bubbam2006/nvmyarn:20.12.2 -c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && yarn next:build"
+# docker run --add-host sessionsafe.org:127.0.0.1 --add-host api.dev.sessionsafe.org:127.0.0.1 --add-host dev.sessionsafe.org:127.0.0.1 --add-host hasura.dev.sessionsafe.org:127.0.0.1 --rm -it -v ${PWD}:/usr/src -p 3001:3001 bubbam2006/nvmyarn:20.12.2 -c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && yarn start"
+
+# docker run --rm -it -v ${PWD}:/usr/src -p 3001:3001 bubbam2006/nvmyarn:20.12.2 -c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && yarn clean-start"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: '-c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && bash"'
+    volumes:
+      - .:/usr/src
+    ports:
+      - "3001:3001"
+    stdin_open: true
+    tty: true
+
+
+# LATEST image is nvmyarn:20.12.2
+
+# OLD IMAGES used nvmyarn:20.5.1 or 18.13.0
+
+
+## OLD ONE:
+#
+# version: '3'
+# # FIRST install yarn packages:
+# # docker run --rm -it -v $(pwd):/usr/src -p 3001:3001 bubbam2006/nvmyarn:latest -c "source /home/nvm/.nvm/nvm.sh && nvm use 18.13.0 && yarn"
+
+# # docker run:
+# #   docker run --rm -it -v $(pwd):/usr/src -p 3001:3001 bubbam2006/nvmyarn:latest -c "source /home/nvm/.nvm/nvm.sh && nvm use 18.13.0 && yarn start"
+# # ...will have to add -u 0:0 for doing "yarn build"
+# #
+# # docker-compose run:
+# #   docker-compose run --rm -p 3001:3001 web -c "source /home/nvm/.nvm/nvm.sh && nvm use 18.13.0 && yarn start"
+# # docker-compose up:
+# #   docker-compose up
+# services:
+#   web:
+#     image: bubbam2006/nvmyarn:latest
+#     working_dir: /usr/src
+#     entrypoint: "/bin/bash" #already set in image but doing it here in case it goes missing
+#     command: '-c "source /home/nvm/.nvm/nvm.sh && nvm use 18.13.0 && yarn start"'
+#     #command: "whereis yarn start"
+#     #stdin_open: true # docker run -i
+#     #tty: true        # docker run -t      
+#     volumes:
+#       - .:/usr/src
+#     # expose:
+#     #   - "3001:3001"
+#     ports:
+#       - "3001:3001"
+#     networks:
+#       - default
+#     environment:
+#       - PORT=3001
+#     user: 0:0
+
+# networks:
+#   default:
