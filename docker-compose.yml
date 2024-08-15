@@ -12,10 +12,18 @@ services:
     #command: '-c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && node index.js'
     volumes:
       - .:/usr/src
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
+      #careful now
+      - /var/run/docker.sock:/var/run/docker.sock      
     ports:
       - "3001:3001"
     stdin_open: true
     tty: true
+    privileged: true
+    network_mode: host
+    environment:
+      - DISPLAY=unix${DISPLAY}    
 
 
 # LATEST image is nvmyarn:20.12.2
