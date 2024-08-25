@@ -8,8 +8,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: '-c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && bash"'
+
+    ## needed to do such command before I had entrypoint load nvm.sh properly:
+    #command: '-c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && bash"'
     #command: '-c "source /home/nvm/.nvm/nvm.sh && nvm use 20.12.2 && node index.js'
+
+    #TODO: make nvm have default version
+    command: 'bash'
     volumes:
       - .:/usr/src
       - /tmp/.X11-unix:/tmp/.X11-unix
